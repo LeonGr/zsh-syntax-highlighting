@@ -30,20 +30,20 @@
 
 # Define default styles.
 : ${ZSH_HIGHLIGHT_STYLES[default]:=none}
-: ${ZSH_HIGHLIGHT_STYLES[unknown-token]:=fg=red,bold}
+: ${ZSH_HIGHLIGHT_STYLES[unknown-token]:=fg=160}
 : ${ZSH_HIGHLIGHT_STYLES[reserved-word]:=fg=yellow}
-: ${ZSH_HIGHLIGHT_STYLES[alias]:=fg=green}
-: ${ZSH_HIGHLIGHT_STYLES[suffix-alias]:=fg=green,underline}
-: ${ZSH_HIGHLIGHT_STYLES[builtin]:=fg=green}
-: ${ZSH_HIGHLIGHT_STYLES[function]:=fg=green}
-: ${ZSH_HIGHLIGHT_STYLES[command]:=fg=green}
-: ${ZSH_HIGHLIGHT_STYLES[precommand]:=fg=green,underline}
+: ${ZSH_HIGHLIGHT_STYLES[alias]:=fg=027}
+: ${ZSH_HIGHLIGHT_STYLES[suffix-alias]:=fg=027,underline}
+: ${ZSH_HIGHLIGHT_STYLES[builtin]:=fg=027}
+: ${ZSH_HIGHLIGHT_STYLES[function]:=fg=027}
+: ${ZSH_HIGHLIGHT_STYLES[command]:=fg=027}
+: ${ZSH_HIGHLIGHT_STYLES[precommand]:=fg=027,underline}
 : ${ZSH_HIGHLIGHT_STYLES[commandseparator]:=none}
-: ${ZSH_HIGHLIGHT_STYLES[hashed-command]:=fg=green}
+: ${ZSH_HIGHLIGHT_STYLES[hashed-command]:=fg=027}
 : ${ZSH_HIGHLIGHT_STYLES[path]:=underline}
 : ${ZSH_HIGHLIGHT_STYLES[path_prefix]:=underline}
-: ${ZSH_HIGHLIGHT_STYLES[globbing]:=fg=blue}
-: ${ZSH_HIGHLIGHT_STYLES[history-expansion]:=fg=blue}
+: ${ZSH_HIGHLIGHT_STYLES[globbing]:=fg=027}
+: ${ZSH_HIGHLIGHT_STYLES[history-expansion]:=fg=027}
 : ${ZSH_HIGHLIGHT_STYLES[single-hyphen-option]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[double-hyphen-option]:=none}
 : ${ZSH_HIGHLIGHT_STYLES[back-quoted-argument]:=none}
@@ -108,15 +108,6 @@ _zsh_highlight_main_highlighter()
   emulate -L zsh
   setopt localoptions extendedglob bareglobqual
 
-  # At the PS3 prompt, highlight nothing.
-  #
-  # (We can't check this in _zsh_highlight_main_highlighter_predicate because
-  # if the predicate returns false, the previous value of region_highlight
-  # would be reused.)
-  if [[ $CONTEXT == 'select' ]]; then
-    return
-  fi
-
   ## Variable declarations and initializations
   local start_pos=0 end_pos highlight_glob=true arg style
   local in_array_assignment=false # true between 'a=(' and the matching ')'
@@ -179,7 +170,7 @@ _zsh_highlight_main_highlighter()
   # and :sudo_opt:.
   #
   # The tokens are always added with both leading and trailing colons to serve as
-  # word delimiters (an improvised array); [[ $x == *:foo:* ]] and x=${x//:foo:/} 
+  # word delimiters (an improvised array); [[ $x == *:foo:* ]] and x=${x//:foo:/}
   # will DTRT regardless of how many elements or repetitions $x has..
   #
   # Handling of redirections: upon seeing a redirection token, we must stall
@@ -305,7 +296,7 @@ _zsh_highlight_main_highlighter()
                         ;;
         *': alias')     () {
                           integer insane_alias
-                          case $arg in 
+                          case $arg in
                             # Issue #263: aliases with '=' on their LHS.
                             #
                             # There are three cases:
